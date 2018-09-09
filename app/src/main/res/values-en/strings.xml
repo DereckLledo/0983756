@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DereckLledo</string>
-    <string name="bonjour">Bonjour</string>
+    <string name="bonjour">Hello</string>
     <string name="orientation"> portrait!</string>
 </resources>
