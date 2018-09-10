@@ -3,4 +3,10 @@
     <string name="app_name">DereckLledo</string>
     <string name="bonjour">Hello</string>
     <string name="orientation"> portrait!</string>
+
+    <string name="hauteur">Height:</string>
+    <string name="largeur">Width:</string>
+    <string name="pourGagner">To win:</string>
+
+
 </resources>

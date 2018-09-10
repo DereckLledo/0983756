@@ -1,10 +1,12 @@
-package ca.cours5b5.derecklledo;
+package ca.cours5b5.derecklledo.activites;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class Parametres extends AppCompatActivity {
+import ca.cours5b5.derecklledo.R;
+
+public class AParametres extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
