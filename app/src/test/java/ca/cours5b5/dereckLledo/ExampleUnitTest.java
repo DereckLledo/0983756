@@ -1,4 +1,4 @@
-package ca.cours5b5.derecklledo;
+package ca.cours5b5.dereckLledo;
 
 import org.junit.Test;
 
