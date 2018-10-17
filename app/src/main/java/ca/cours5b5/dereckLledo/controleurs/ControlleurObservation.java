@@ -13,7 +13,7 @@ public class ControlleurObservation {
 
     }
 
-    public static void observerModele(String nomModele, final ListenerObservatuer listenerObservatuer){
+    public static void observerModele(String nomModele, final ListenerObservateur listenerObservatuer){
         /* Enregistrer le listener dans le Map observations
          */
     }

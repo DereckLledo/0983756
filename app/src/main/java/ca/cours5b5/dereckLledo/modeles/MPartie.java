@@ -1,5 +1,6 @@
 package ca.cours5b5.dereckLledo.modeles;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import ca.cours5b5.dereckLledo.exceptions.ErreurSerialisation;
@@ -17,6 +18,8 @@ public class MPartie extends Modele{
 
     public MParametresPartie getParametres(){
 
+        //PEUT ETRE A CHANGER
+        return parametres;
     }
 
     @Override
@@ -28,5 +31,13 @@ public class MPartie extends Modele{
     @Override
     public Map<String, Object> enObjetJson() throws ErreurSerialisation{
         /*inutilisé pour l'instant*/
+
+        /* A ENLEVER SEULEMENT POUR LES TEST */
+        Map<String, Object> objetJson = new HashMap<>();
+
+        objetJson.put(__parametres, parametres.toString());
+
+        return objetJson;
+
     }
 }
