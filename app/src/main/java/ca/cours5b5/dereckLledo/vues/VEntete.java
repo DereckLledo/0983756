@@ -18,14 +18,19 @@ public class VEntete extends AppCompatButton {
         super(context, attrs, defStyleAttr);
     }
 
-//    private int colonne;
-//
-//    public VEntete(Context context, int colonne){
-//        /*
-//        afficher le numéro de colonne
-//         */
-//    }
-//
+    private int colonne;
+
+    public VEntete(Context context, int colonne){
+        /*
+        afficher le numéro de colonne
+         */
+
+        super(context);
+        this.colonne = colonne;
+        //on ajoute le # de la colonne à l'en-tete
+        setText(colonne + " ");
+    }
+
 
 
 }

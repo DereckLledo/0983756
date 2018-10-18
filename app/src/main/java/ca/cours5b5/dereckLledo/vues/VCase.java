@@ -19,11 +19,15 @@ public class VCase extends AppCompatButton{
         super(context, attrs, defStyleAttr);
     }
 
-//    public VCase(Context context, int rangee, int colonne){
-//        /*
-//        Afficher la rangée et la colonne
-//        Changer la couleur de fond si désiré
-//         */
-//
-//    }
+    public VCase(Context context, int rangee, int colonne){
+        /*
+        Afficher la rangée et la colonne
+        Changer la couleur de fond si désiré
+         */
+        super(context);
+
+        //on ajoute le text sur la case
+        setText(colonne + ", " + rangee);
+
+    }
 }

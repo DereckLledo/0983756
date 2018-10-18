@@ -19,7 +19,7 @@ public class VParametres extends Vue {
 
     static{
 
-        Log.d("Atelier04", VParametres.class.getSimpleName() + "::static");
+        Log.d("MonEtiquette", VParametres.class.getSimpleName() + "::static");
 
     }
 

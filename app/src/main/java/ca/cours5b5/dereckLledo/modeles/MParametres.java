@@ -14,12 +14,10 @@ import ca.cours5b5.dereckLledo.serialisation.AttributSerialisable;
 public class MParametres extends Modele {
 
     // FIXME: c'est temporaire ; on va écrire un gestionnaire de modèles à l'Atelier07
-    public static MParametres instance;
+    public static MParametres instance = new MParametres();
 
     static{
-        Log.d("Atelier04", MParametres.class.getSimpleName() + "::static");
-
-        instance = new MParametres();
+        Log.d("MonEtiquette", MParametres.class.getSimpleName() + "::static");
     }
 
     @AttributSerialisable
@@ -42,6 +40,8 @@ public class MParametres extends Modele {
     private List<Integer> choixLargeur;
     private List<Integer> choixPourGagner;
 
+
+
     public MParametres(){
         super();
 
@@ -50,6 +50,9 @@ public class MParametres extends Modele {
         pourGagner = GConstantes.POUR_GAGNER_PAR_DEFAUT;
 
         genererListesDeChoix();
+
+
+
     }
 
     public List<Integer> getChoixHauteur(){
@@ -114,6 +117,10 @@ public class MParametres extends Modele {
 
     private void genererListeChoixPourGagner(){
         choixPourGagner = genererListeChoix(GConstantes.POUR_GAGNER_MIN, GConstantes.POUR_GAGNER_MAX);
+    }
+
+    public MParametresPartie getParametresPartie(){
+        return this.parametresPartie;
     }
 
     @Override

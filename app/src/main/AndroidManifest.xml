@@ -11,8 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activites.AParametres">
         </activity>
-        <activity android:name=".activites.APartie">
-        </activity>
+
         <activity android:name=".activites.AMenuPrincipal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +20,9 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".activites.APartie">
+        </activity>
+
     </application>
 
 </manifest>
