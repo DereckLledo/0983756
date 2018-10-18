@@ -27,7 +27,7 @@ public class VCase extends AppCompatButton{
         super(context);
 
         //on ajoute le text sur la case
-        setText(colonne + ", " + rangee);
+        setText(rangee + ", " + colonne);
 
     }
 }
