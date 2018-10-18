@@ -24,30 +24,25 @@ public class MParametresPartie extends Modele{
 
     //si il n'y a aucun parametre changé
     public MParametresPartie(){
-        this.setHauteur(GConstantes.HAUTEUR_PAR_DEFAUT);
-        this.setLargeur(GConstantes.LARGEUR_PAR_DEFAUT);
-        this.setPourGagner(GConstantes.POUR_GAGNER_PAR_DEFAUT);
+        this.hauteur = (GConstantes.HAUTEUR_PAR_DEFAUT);
+        this.largeur = (GConstantes.LARGEUR_PAR_DEFAUT);
+        this.pourGagner = (GConstantes.POUR_GAGNER_PAR_DEFAUT);
 
     }
 
 
     public static MParametresPartie aPartirMParametres( MParametres mParametres){
-        MParametresPartie paramPartie = new MParametresPartie();
-
-        paramPartie.setHauteur(mParametres.getHauteur());
-        paramPartie.setLargeur (mParametres.getLargeur());
-        paramPartie.setPourGagner(mParametres.getPourGagner());
-
-
+        MParametresPartie paramPartie;
+        paramPartie = mParametres.getParametresPartie().cloner();
         return paramPartie;
     }
 
     public MParametresPartie cloner(){
         MParametresPartie paramClone = new MParametresPartie();
 
-        paramClone.hauteur = this.hauteur;
-        paramClone.largeur = this.largeur;
-        paramClone.pourGagner = this.pourGagner;
+        paramClone.setHauteur(this.hauteur);
+        paramClone.setLargeur(this.largeur);
+        paramClone.setPourGagner(this.pourGagner);
 
         return paramClone;
 

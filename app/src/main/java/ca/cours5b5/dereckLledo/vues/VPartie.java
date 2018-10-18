@@ -6,10 +6,9 @@ import android.util.Log;
 
 import ca.cours5b5.dereckLledo.R;
 import ca.cours5b5.dereckLledo.controleurs.interfaces.ListenerObservateur;
-import ca.cours5b5.dereckLledo.modeles.MParametresPartie;
 import ca.cours5b5.dereckLledo.modeles.MPartie;
 import ca.cours5b5.dereckLledo.modeles.Modele;
-import ca.cours5b5.dereckLledo.controleurs.ControlleurObservation;
+import ca.cours5b5.dereckLledo.controleurs.ControleurObservation;
 
 public class VPartie extends Vue{
 
@@ -54,21 +53,26 @@ public class VPartie extends Vue{
          */
         Log.d("MonEtiquette", VPartie.class.getSimpleName() + "::observerPartie");
 
-        ControlleurObservation.observerModele(MPartie.class.getSimpleName(), new ListenerObservateur() {
-            @Override
-            public void reagirChangementAuModele(Modele modele) {
-
-                MPartie partie = (MPartie) modele;
-                initialiserGrille(partie);
-
-            }
+        ControleurObservation.observerModele(MPartie.class.getSimpleName(), new ListenerObservateur() {
 
             @Override
             public void reagirNouveauModele(Modele modele) {
-                MPartie partie = getPartie(modele);
+                Log.d("MonEtiquette", VPartie.class.getSimpleName() + "::reagirNouveauModele");
+                super.reagirNouveauModele(modele);
+                MPartie partie = (MPartie) modele;
                 initialiserGrille(partie);
 
+
             }
+
+            @Override
+            public void reagirChangementAuModele(Modele modele) {
+                Log.d("MonEtiquette", VPartie.class.getSimpleName() + "::reagirChangementAuModele");
+                MPartie partie = (MPartie) modele;
+                initialiserGrille(partie);
+            }
+
+
         });
     }
 
@@ -82,13 +86,14 @@ public class VPartie extends Vue{
 
     private void initialiserGrille(MPartie partie){
 
-
+        Log.d("MonEtiquette", VPartie.class.getSimpleName() + "::initialiserGrille");
 // FIXME: CA FONCTIONNE SI J'ENTRE DES CHIFFRE MANUELLEMENT MAIS CA CRASH SINON
         int hauteur = partie.getParametres().getHauteur();
         int largeur = partie.getParametres().getLargeur();
 
         this.grille.creerGrille(hauteur, largeur);
 
+        //this.grille.creerGrille(4,4);
 
 
     }

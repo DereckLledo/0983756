@@ -11,20 +11,24 @@ import ca.cours5b5.dereckLledo.serialisation.Jsonification;
 import ca.cours5b5.dereckLledo.modeles.MPartie;
 
 public class APartie extends Activite{
+
     static{
-        Log.d("Atelier06", AParametres.class.getSimpleName() + "::static");
+        Log.d("MonEtiquette", APartie.class.getSimpleName() + "::static");
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MonEtiquette", APartie.class.getSimpleName() + "::onCreate");
+
+        setContentView(R.layout.activity_apartie);
 
         if(savedInstanceState != null){
             restaurerParametres(savedInstanceState);
         }
 
-        setContentView(R.layout.activity_apartie);
+
     }
 
     @Override
@@ -39,10 +43,11 @@ public class APartie extends Activite{
         String cle = MPartie.class.getSimpleName();
         String json = savedInstanceState.getString(cle);
 
-        Log.d("Atelier06", AParametres.class.getSimpleName() + "::restaurerParametres, clé: " + cle);
-        Log.d("Atelier06", AParametres.class.getSimpleName() + "::restaurerParametres, json:\n" + json);
+        Log.d("MonEtiquette", APartie.class.getSimpleName() + "::restaurerParametres, clé: " + cle);
+        Log.d("MonEtiquette", APartie.class.getSimpleName() + "::restaurerParametres, json:\n" + json);
 
         Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
+        Log.d("MonEtiquette",objetJson.toString() );
 
         MParametres.instance.aPartirObjetJson(objetJson);
 

@@ -14,7 +14,7 @@ import ca.cours5b5.dereckLledo.serialisation.Jsonification;
 public class AParametres extends Activite {
 
     static{
-        Log.d("Atelier04", AParametres.class.getSimpleName() + "::static");
+        Log.d("MonEtiquette", AParametres.class.getSimpleName() + "::static");
     }
 
     @Override
@@ -32,21 +32,19 @@ public class AParametres extends Activite {
         String cle = MParametres.class.getSimpleName();
         String json = savedInstanceState.getString(cle);
 
-        Log.d("Atelier05", AParametres.class.getSimpleName() + "::restaurerParametres, clé: " + cle);
-        Log.d("Atelier05", AParametres.class.getSimpleName() + "::restaurerParametres, json:\n" + json);
+        Log.d("MonEtiquette", AParametres.class.getSimpleName() + "::restaurerParametres, clé: " + cle);
+        Log.d("MonEtiquette", AParametres.class.getSimpleName() + "::restaurerParametres, json:\n" + json);
 
         Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
 
-        MParametres.instance = new MParametres();
 
-        MParametres.instance.aPartirObjetJson(objetJson);
 
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
+        Log.d("MonEtiquette", AParametres.class.getSimpleName() + "::onSaveInstanceState");
         sauvegarderParametres(outState);
 
     }
@@ -58,8 +56,8 @@ public class AParametres extends Activite {
 
         String json = Jsonification.enChaineJson(objetJson);
 
-        Log.d("Atelier05", AParametres.class.getSimpleName() + "::sauvegarderParametres, clé: " + cle);
-        Log.d("Atelier05", AParametres.class.getSimpleName() + "::sauvegarderParametres, json: \n" + json);
+        Log.d("MonEtiquette", AParametres.class.getSimpleName() + "::sauvegarderParametres, clé: " + cle);
+        Log.d("MonEtiquette", AParametres.class.getSimpleName() + "::sauvegarderParametres, json: \n" + json);
 
         outState.putString(cle, json);
     }

@@ -9,9 +9,8 @@ import ca.cours5b5.dereckLledo.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.dereckLledo.modeles.MParametres;
 import ca.cours5b5.dereckLledo.modeles.MPartie;
 import ca.cours5b5.dereckLledo.modeles.Modele;
-import ca.cours5b5.dereckLledo.vues.VPartie;
 
-public class ControlleurObservation {
+public class ControleurObservation {
 
     private static Map<Modele, ListenerObservateur> observations;
 
@@ -25,15 +24,20 @@ public class ControlleurObservation {
     public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur){
         /* Enregistrer le listener dans le Map observations
          */
-        Log.d("MonEtiquette", ControlleurObservation.class.getSimpleName() + "::observerModele");
-
-        observations.put(MParametres.instance, listenerObservateur);
-
-        partie = new MPartie(MParametres.instance.getParametresPartie());
-
-        listenerObservateur.reagirNouveauModele(partie);
+        Log.d("MonEtiquette", ControleurObservation.class.getSimpleName() + "::observerModele + " + nomModele);
 
 
+        if ( nomModele.equals(MPartie.class.getSimpleName())){
+
+            partie = new MPartie(MParametres.instance.getParametresPartie().cloner());
+            observations.put(partie,listenerObservateur);
+            listenerObservateur.reagirNouveauModele(partie);
+
+        } else {
+
+            observations.put(MParametres.instance, listenerObservateur);
+            listenerObservateur.reagirNouveauModele(MParametres.instance);
+        }
 
     }
 }

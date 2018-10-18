@@ -43,7 +43,7 @@ public class MParametres extends Modele {
 
 
     public MParametres(){
-        super();
+        parametresPartie = new MParametresPartie();
 
         hauteur = GConstantes.HAUTEUR_PAR_DEFAUT;
         largeur = GConstantes.LARGEUR_PAR_DEFAUT;
@@ -144,7 +144,7 @@ public class MParametres extends Modele {
 
                 case __pourGagner:
 
-                    largeur = Integer.valueOf(chaineValeur);
+                    pourGagner = Integer.valueOf(chaineValeur);
                     break;
 
                 default:
