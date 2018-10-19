@@ -37,6 +37,9 @@ public class AParametres extends Activite {
 
         Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
 
+        //on modifie les parametres de l'instance statique de MParametres par les informations dans le json
+        MParametres.instance.aPartirObjetJson(objetJson);
+
 
 
     }

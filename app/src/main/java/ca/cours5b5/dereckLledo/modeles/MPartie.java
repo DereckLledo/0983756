@@ -20,7 +20,7 @@ public class MPartie extends Modele{
         this.parametres = parametres;
     }
 
-    public MParametresPartie getParametres(){ return this.parametres; }
+    public MParametresPartie   getParametres(){ return this.parametres; }
 
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation{

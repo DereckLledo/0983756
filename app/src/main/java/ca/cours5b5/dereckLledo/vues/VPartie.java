@@ -6,6 +6,8 @@ import android.util.Log;
 
 import ca.cours5b5.dereckLledo.R;
 import ca.cours5b5.dereckLledo.controleurs.interfaces.ListenerObservateur;
+import ca.cours5b5.dereckLledo.modeles.MParametres;
+import ca.cours5b5.dereckLledo.modeles.MParametresPartie;
 import ca.cours5b5.dereckLledo.modeles.MPartie;
 import ca.cours5b5.dereckLledo.modeles.Modele;
 import ca.cours5b5.dereckLledo.controleurs.ControleurObservation;
@@ -68,8 +70,8 @@ public class VPartie extends Vue{
             @Override
             public void reagirChangementAuModele(Modele modele) {
                 Log.d("MonEtiquette", VPartie.class.getSimpleName() + "::reagirChangementAuModele");
-                MPartie partie = (MPartie) modele;
-                initialiserGrille(partie);
+                MPartie partie = new MPartie(MParametres.instance.getParametresPartie());
+                Log.d("MonEtiquette", "HAUTEUR : " + partie.getParametres().getHauteur().toString());
             }
 
 

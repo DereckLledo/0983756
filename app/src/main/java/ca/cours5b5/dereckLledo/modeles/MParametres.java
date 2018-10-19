@@ -127,6 +127,8 @@ public class MParametres extends Modele {
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation{
         for(Map.Entry<String, Object> entry : objetJson.entrySet()){
 
+            Log.d("MonEtiquette", MParametres.class.getSimpleName() + "::aPartirObjetJson");
+
             String chaineValeur = (String) entry.getValue();
 
             switch (entry.getKey()){

@@ -12,7 +12,10 @@ import android.widget.Spinner;
 import java.util.List;
 
 import ca.cours5b5.dereckLledo.R;
+import ca.cours5b5.dereckLledo.controleurs.ControleurObservation;
+import ca.cours5b5.dereckLledo.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.dereckLledo.modeles.MParametres;
+import ca.cours5b5.dereckLledo.modeles.Modele;
 
 
 public class VParametres extends Vue {
@@ -55,8 +58,16 @@ public class VParametres extends Vue {
         initialiserSpinner(spinnerHauteur);
         initialiserSpinner(spinnerLargeur);
         initialiserSpinner(spinnerPourGagner);
-
         installerListeners();
+
+        //permet d'observer cette ce modele
+        ControleurObservation.observerModele(MParametres.class.getSimpleName(), new ListenerObservateur() {
+            @Override
+            public void reagirChangementAuModele(Modele modele) {
+                afficherLesChoix();
+            }
+        });
+
     }
 
     private void initialiserSpinner(Spinner spinner){

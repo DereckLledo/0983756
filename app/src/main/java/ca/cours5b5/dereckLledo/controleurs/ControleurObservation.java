@@ -14,7 +14,7 @@ public class ControleurObservation {
 
     private static Map<Modele, ListenerObservateur> observations;
 
-    //L'attribut est private: la vue doit obtenir le modele par l'observation
+
     private static MPartie partie;
 
     static {
@@ -40,4 +40,10 @@ public class ControleurObservation {
         }
 
     }
+
+
+    public static MPartie getPartie() {
+        return partie;
+    }
+
 }

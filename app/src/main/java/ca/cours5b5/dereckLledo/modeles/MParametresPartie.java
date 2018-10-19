@@ -72,6 +72,7 @@ public class MParametresPartie extends Modele{
         this.pourGagner = pourGagner;
     }
 
+
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation{
         for(Map.Entry<String, Object> entry : objetJson.entrySet()){
