@@ -82,6 +82,13 @@ public final class Disque extends SourceDeDonnees {
 
     private File getFichier(String nomModele) {
 
+        /*
+            Obtenir le nomModele et l'utiliser pour le nom du fichier
+
+            ex: MParametres/Timf083247djhER13817 => MParametres.json
+         */
+        //TODO: MODIFIER CET METHODE
+
         String nomFichier = getNomFichier(nomModele);
 
         return new File(repertoireRacine, nomFichier);

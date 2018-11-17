@@ -9,4 +9,14 @@ public abstract class SourceDeDonnees {
 
     public abstract void sauvegarderModele(final String cheminSauvegarde, final Map<String, Object> objetJson);
 
+    protected String getNomModele(String cheminSauvegarde) {
+        /*
+            Pour un chemin de sauvegarde de la forme nomModele/ID
+
+            retourner le nomModele
+         */
+        //TODO: MODIFIER CETTE METHODE
+        return null;
+    }
+
 }

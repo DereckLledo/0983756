@@ -136,4 +136,18 @@ public final class ControleurModeles {
         }
     }
 
+    public static String getCheminSauvegarde(String nomModele) {
+        //TODO: MODIFIER METHODE ET A UTILISER DANS SAUVEGARDE ET CHARGEMENT
+        /*
+            Le chemin est de la forme:
+
+            nomModele/idUsager
+
+            ex:
+
+            MPartie/T1m4328789hw98129dnWe12
+         */
+        return null;
+    }
+
 }

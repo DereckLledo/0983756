@@ -18,6 +18,8 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
     @Override
     public Map<String, Object> chargerModele(String cheminSauvegarde) {
 
+        //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
+
         if(bundle != null && bundle.containsKey(cheminSauvegarde)){
 
             String json = bundle.getString(cheminSauvegarde);
@@ -35,12 +37,24 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
 
     @Override
     public void sauvegarderModele(String cheminSauvegarde, Map<String, Object> objetJson) {
+        //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
+
         if(bundle != null){
 
             String json = Jsonification.enChaineJson(objetJson);
             bundle.putString(cheminSauvegarde, json);
 
         }
+    }
+
+    private String getCle(String cheminSauvegarde){
+        /*
+            Utiliser le nomModele comme clé de sauvegarde
+
+            ex: MPartie/Timrietmeriterjuin2390128 => MPartie
+         */
+        //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
+        return null;
     }
 
 }
