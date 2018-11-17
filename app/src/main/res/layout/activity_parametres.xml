@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ca.cours5b5.dereckLledo.vues.VParametres xmlns:android="http://schemas.android.com/apk/res/android"
+<ca.cours5b5.derecklledo.vues.VParametres xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -89,4 +89,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/spinner_largeur"
         app:layout_constraintTop_toTopOf="@+id/texte_pour_gagner" />
-</ca.cours5b5.dereckLledo.vues.VParametres>
+
+</ca.cours5b5.derecklledo.vues.VParametres>
