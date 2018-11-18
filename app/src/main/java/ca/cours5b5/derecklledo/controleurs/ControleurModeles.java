@@ -13,6 +13,7 @@ import ca.cours5b5.derecklledo.modeles.MParametresPartie;
 import ca.cours5b5.derecklledo.modeles.MPartie;
 import ca.cours5b5.derecklledo.modeles.Modele;
 import ca.cours5b5.derecklledo.donnees.Disque;
+import ca.cours5b5.derecklledo.usagers.UsagerCourant;
 
 public final class ControleurModeles {
 
@@ -47,7 +48,7 @@ public final class ControleurModeles {
 
             Map<String, Object> objetJson = modele.enObjetJson();
 
-            sourceDeDonnees.sauvegarderModele(nomModele, objetJson);
+            sourceDeDonnees.sauvegarderModele(getCheminSauvegarde(nomModele), objetJson);
 
         }
     }
@@ -137,17 +138,16 @@ public final class ControleurModeles {
     }
 
     public static String getCheminSauvegarde(String nomModele) {
-        //TODO: MODIFIER METHODE ET A UTILISER DANS SAUVEGARDE ET CHARGEMENT
         /*
             Le chemin est de la forme:
 
-            nomModele/idUsager
+        nomModele/idUsager
 
-            ex:
+        ex:
 
-            MPartie/T1m4328789hw98129dnWe12
-         */
-        return null;
+        MPartie/T1m4328789hw98129dnWe12
+                */
+        return nomModele + "/" + UsagerCourant.getId();
     }
 
 }

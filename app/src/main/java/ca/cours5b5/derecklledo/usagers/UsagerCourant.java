@@ -1,19 +1,28 @@
 package ca.cours5b5.derecklledo.usagers;
 
+import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 public class UsagerCourant {
 
     public static boolean siUsagerConnecte(){
-        //TODO: MODIFIER CETTE METHODE
         /*
             Retourne vrai si l'usager est connecté
 
             Utiliser FirebaseAuth
          */
-        return false;
+        boolean connecte = false;
+
+        if (FirebaseAuth.getInstance().getCurrentUser()!= null ){
+            connecte = true;
+            Log.d("atelier11+", FirebaseAuth.getInstance().toString());
+        }
+
+        return connecte;
     }
 
     public static String getId(){
-        //TODO: MODIFIER CETTE METHODE
         /*
             Retourne l'identifiant de l'usager connecté
             Sinon retourner un ID par défaut
@@ -21,7 +30,11 @@ public class UsagerCourant {
             Utiliser FirebaseAuth
 
          */
+        if (siUsagerConnecte() ) {
+            return FirebaseAuth.getInstance().getCurrentUser().getUid();
+        } else {
+            return FirebaseAuth.getInstance().getUid();
+        }
 
-        return null;
     }
 }

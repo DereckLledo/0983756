@@ -13,24 +13,37 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="7dp"
         android:text="@string/parametres"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bouton_partie" />
 
     <Button
         android:id="@+id/bouton_partie"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/jouer"
         app:layout_constraintBottom_toTopOf="@+id/bouton_parametres"
         app:layout_constraintEnd_toEndOf="@+id/bouton_parametres"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/bouton_parametres"
+        app:layout_constraintTop_toBottomOf="@+id/bouton_connexion" />
+
+    <Button
+        android:id="@+id/bouton_connexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/connexion"
+        app:layout_constraintEnd_toEndOf="@+id/bouton_partie"
+        app:layout_constraintHorizontal_bias="0.695"
+        app:layout_constraintStart_toStartOf="@+id/bouton_partie"
         app:layout_constraintTop_toTopOf="parent" />
 </ca.cours5b5.derecklledo.vues.VMenuPrincipal>

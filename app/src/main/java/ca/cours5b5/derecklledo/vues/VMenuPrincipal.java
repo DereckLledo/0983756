@@ -2,6 +2,7 @@ package ca.cours5b5.derecklledo.vues;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,6 +19,9 @@ public class VMenuPrincipal extends Vue {
 
     private Button boutonPartie;
     private Action actionPartie;
+
+    private Button boutonConnexion;
+    private Action actionConnexion;
 
     public VMenuPrincipal(Context context) {
         super(context);
@@ -50,6 +54,8 @@ public class VMenuPrincipal extends Vue {
 
         boutonPartie = findViewById(R.id.bouton_partie);
 
+        boutonConnexion = findViewById(R.id.bouton_connexion);
+
     }
 
     private void demanderActions() {
@@ -57,6 +63,8 @@ public class VMenuPrincipal extends Vue {
         actionParametres = ControleurAction.demanderAction(GCommande.OUVRIR_MENU_PARAMETRES);
 
         actionPartie = ControleurAction.demanderAction(GCommande.DEMARRER_PARTIE);
+
+        actionConnexion = ControleurAction.demanderAction(GCommande.CONNEXION);
 
     }
 
@@ -66,6 +74,8 @@ public class VMenuPrincipal extends Vue {
         installerListenerParametres();
 
         installerListenerPartie();
+
+        installerListenerConnexion();
 
     }
 
@@ -89,6 +99,16 @@ public class VMenuPrincipal extends Vue {
             }
         });
 
+    }
+
+    private void installerListenerConnexion(){
+        Log.d("atelier11+", "VMenuPrincipal:listenerConnexion");
+        boutonConnexion.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view){
+                actionConnexion.executerDesQuePossible();
+            }
+        });
     }
 
 }
