@@ -3,11 +3,14 @@ package ca.cours5b5.derecklledo.activites;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ResourceBundle;
+
 import ca.cours5b5.derecklledo.R;
 import ca.cours5b5.derecklledo.controleurs.ControleurAction;
 import ca.cours5b5.derecklledo.controleurs.ControleurModeles;
 import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.derecklledo.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.derecklledo.donnees.Disque;
 import ca.cours5b5.derecklledo.donnees.Serveur;
 import ca.cours5b5.derecklledo.global.GCommande;
 import ca.cours5b5.derecklledo.modeles.MParametres;
@@ -31,9 +34,15 @@ public class AParametres extends Activite implements Fournisseur{
         ControleurAction.fournirAction(this, GCommande.EFFACER, new ListenerFournisseur() {
             @Override
             public void executer(Object... args) {
-                //todo: EFFACER LA SAUVEGARDE
-                Serveur.getInstance().detruireSauvegarde(MParametres.class.getSimpleName());
-                Serveur.getInstance().detruireSauvegarde(MPartie.class.getSimpleName());
+
+                ControleurModeles.detruireSauvegarde(MParametres.class.getSimpleName());
+                ControleurModeles.detruireSauvegarde(MPartie.class.getSimpleName());
+
+                ControleurModeles.detruireModele(MParametres.class.getSimpleName());
+                ControleurModeles.detruireModele(MPartie.class.getSimpleName());
+
+
+
             }
         });
     }

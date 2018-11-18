@@ -20,6 +20,7 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
 
         //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
 
+
         if(bundle != null && bundle.containsKey(cheminSauvegarde)){
 
             String json = bundle.getString(cheminSauvegarde);

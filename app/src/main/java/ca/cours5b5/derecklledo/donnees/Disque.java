@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.util.Map;
 
 import ca.cours5b5.derecklledo.global.GConstantes;
+import ca.cours5b5.derecklledo.modeles.MPartie;
 import ca.cours5b5.derecklledo.serialisation.Jsonification;
 
 public final class Disque extends SourceDeDonnees {
@@ -62,6 +63,8 @@ public final class Disque extends SourceDeDonnees {
 
         String json = Jsonification.enChaineJson(objetJson);
 
+        Log.d("atelier11+", "Disque::sauvegarderModele +  " + fichier.toString());
+
         try {
 
             OutputStream outputStream = new FileOutputStream(fichier);
@@ -82,7 +85,17 @@ public final class Disque extends SourceDeDonnees {
     @Override
     public void detruireSauvegarde(String cheminSauvegarde){
         //todo: Peut-etre a modifier
-      //  getFichier(cheminSauvegarde).delete();
+
+
+        File fichierEffacer = getFichier(cheminSauvegarde);
+
+        if (fichierEffacer.delete()) {
+            Log.d("atelier11+", "DISQUE + detruireSauvegarde + " + cheminSauvegarde + " :::TRUE");
+       //     Disque.getInstance().detruireSauvegarde((MPartie.class.getSimpleName()));
+
+        } else {
+            Log.d("atelier11+", "DISQUE + detruireSauvegarde + " + cheminSauvegarde + " :::FALSE");
+        }
     }
 
 
@@ -93,7 +106,6 @@ public final class Disque extends SourceDeDonnees {
 
             ex: MParametres/Timf083247djhER13817 => MParametres.json
          */
-        //TODO: MODIFIER CET METHODE
 
 
 
@@ -111,7 +123,7 @@ public final class Disque extends SourceDeDonnees {
             nomFichier = getNomFichier(nomModele);
         }
 
-        Log.d("atelier11+", "Disque: getFichier :" + nomFichier);
+        Log.d("atelier11+", "Disque: getFichier : " + nomFichier);
 
 
         return new File(repertoireRacine, nomFichier);

@@ -20,6 +20,13 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
     private static   List<AuthUI.IdpConfig> fournisseursDeConnexion = new ArrayList<>();
 
+    static {
+
+            fournisseursDeConnexion.add(new AuthUI.IdpConfig.GoogleBuilder().build());
+            fournisseursDeConnexion.add(new AuthUI.IdpConfig.EmailBuilder().build());
+            fournisseursDeConnexion.add(new AuthUI.IdpConfig.PhoneBuilder().build());
+
+    }
 
 
     @Override
@@ -38,6 +45,8 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
         fournirActionDemarrerPartie();
 
         fournirActionConnexion();
+
+        //fournirActionDeconnexion();
     }
 
     private void fournirActionOuvrirMenuParametres() {
@@ -70,12 +79,6 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
     private void fournirActionConnexion(){
 
-        if (fournisseursDeConnexion.isEmpty()){
-
-            fournisseursDeConnexion.add(new AuthUI.IdpConfig.GoogleBuilder().build());
-            fournisseursDeConnexion.add(new AuthUI.IdpConfig.EmailBuilder().build());
-            fournisseursDeConnexion.add(new AuthUI.IdpConfig.PhoneBuilder().build());
-        }
 
         ControleurAction.fournirAction(this, GCommande.CONNEXION, new ListenerFournisseur() {
             @Override

@@ -1,5 +1,7 @@
 package ca.cours5b5.derecklledo.controleurs;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +68,14 @@ public final class ControleurModeles {
         }
 
         return modele;
+    }
+
+    public static void detruireSauvegarde(String nomModele) {
+        Log.d("atelier11+", "ControleurModeles: detruireSauvegarde");
+        String cheminSauvegarde = getCheminSauvegarde(nomModele);
+        for(SourceDeDonnees source : listeDeSauvegardes ) {
+            source.detruireSauvegarde(cheminSauvegarde);
+        }
     }
 
 
