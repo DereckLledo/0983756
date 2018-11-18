@@ -10,6 +10,7 @@ import ca.cours5b5.derecklledo.R;
 import ca.cours5b5.derecklledo.controleurs.Action;
 import ca.cours5b5.derecklledo.controleurs.ControleurAction;
 import ca.cours5b5.derecklledo.global.GCommande;
+import ca.cours5b5.derecklledo.usagers.UsagerCourant;
 
 
 public class VMenuPrincipal extends Vue {
@@ -20,8 +21,9 @@ public class VMenuPrincipal extends Vue {
     private Button boutonPartie;
     private Action actionPartie;
 
-    private Button boutonConnexion;
+    public static Button boutonConnexion;
     private Action actionConnexion;
+    private Action actionDeconnexion;
 
     public VMenuPrincipal(Context context) {
         super(context);
@@ -38,6 +40,7 @@ public class VMenuPrincipal extends Vue {
     @Override
     protected void onFinishInflate(){
         super.onFinishInflate();
+
 
         recupererControles();
 
@@ -56,6 +59,8 @@ public class VMenuPrincipal extends Vue {
 
         boutonConnexion = findViewById(R.id.bouton_connexion);
 
+
+
     }
 
     private void demanderActions() {
@@ -65,6 +70,10 @@ public class VMenuPrincipal extends Vue {
         actionPartie = ControleurAction.demanderAction(GCommande.DEMARRER_PARTIE);
 
         actionConnexion = ControleurAction.demanderAction(GCommande.CONNEXION);
+
+        actionDeconnexion = ControleurAction.demanderAction(GCommande.DECONNEXION);
+
+
 
     }
 
@@ -106,9 +115,18 @@ public class VMenuPrincipal extends Vue {
         boutonConnexion.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view){
-                actionConnexion.executerDesQuePossible();
+                if ( !UsagerCourant.siUsagerConnecte()){
+                    actionConnexion.executerDesQuePossible();
+                } else {
+                    actionDeconnexion.executerDesQuePossible();
+                }
+
             }
         });
+    }
+
+    public static void modifierBoutonConnexion(String text) {
+            boutonConnexion.setText(text);
     }
 
 }

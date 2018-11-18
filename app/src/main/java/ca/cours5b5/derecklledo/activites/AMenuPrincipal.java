@@ -2,9 +2,12 @@ package ca.cours5b5.derecklledo.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,8 @@ import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.derecklledo.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.derecklledo.global.GCommande;
 import ca.cours5b5.derecklledo.global.GConstantes;
+import ca.cours5b5.derecklledo.usagers.UsagerCourant;
+import ca.cours5b5.derecklledo.vues.VMenuPrincipal;
 
 public class AMenuPrincipal extends Activite implements Fournisseur {
 
@@ -34,6 +39,11 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
 
+        if ( UsagerCourant.siUsagerConnecte() ) {
+            VMenuPrincipal.modifierBoutonConnexion(getResources().getString(R.string.deconnexion));
+        } else {
+            VMenuPrincipal.modifierBoutonConnexion(getResources().getString(R.string.connexion));
+        }
         fournirActions();
 
     }
@@ -46,7 +56,7 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
         fournirActionConnexion();
 
-        //fournirActionDeconnexion();
+        fournirActionDeconnexion();
     }
 
     private void fournirActionOuvrirMenuParametres() {
@@ -88,7 +98,18 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
         });
 
 
+    }
 
+
+    private void fournirActionDeconnexion(){
+
+
+        ControleurAction.fournirAction(this, GCommande.DECONNEXION, new ListenerFournisseur() {
+            @Override
+            public void executer(Object... args) {
+                transitionDeconnexion();
+            }
+        });
 
 
     }
@@ -108,12 +129,30 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
     }
 
     private void transitionConnexion(){
+
         Intent intentionConnexion = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(fournisseursDeConnexion)
                 .build();
         startActivityForResult(intentionConnexion, GConstantes.CODE_CONNEXION_FIREBASE);
+
     }
+
+    private void transitionDeconnexion(){
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        //deconnexion terminer
+                        Log.d("atelier11+", "DECONNEXION");
+
+                        String text = getResources().getString(R.string.connexion);
+                        VMenuPrincipal.modifierBoutonConnexion(text);
+                    }
+                });
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent Data) {
@@ -122,6 +161,8 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
             if (resultCode == RESULT_OK) {
                 //Connexion réussie
                 Log.d("atelier11+", "AMenuPrincipal -> connexion: TRUE");
+                String text = getResources().getString(R.string.deconnexion);
+                VMenuPrincipal.modifierBoutonConnexion(text);
 
             } else {
                 //connexion échoué
