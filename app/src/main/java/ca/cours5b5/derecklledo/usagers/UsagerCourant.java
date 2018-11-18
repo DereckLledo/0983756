@@ -16,7 +16,7 @@ public class UsagerCourant {
 
         if (FirebaseAuth.getInstance().getCurrentUser()!= null ){
             connecte = true;
-            Log.d("atelier11+", FirebaseAuth.getInstance().toString());
+           // Log.d("atelier11+", FirebaseAuth.getInstance().getUid());
         }
 
         return connecte;

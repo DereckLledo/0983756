@@ -23,4 +23,6 @@
     <string name="connexion">Connexion</string>
     <string name="deconnexion">Déconnexion</string>
 
+    <string name="effacerPartie">Effacer partie courante</string>
+
 </resources>

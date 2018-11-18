@@ -13,6 +13,8 @@ public enum GCommande {
 
     JOUER_COUP_ICI,
 
-    CONNEXION;
+    CONNEXION,
+
+    EFFACER;
 
 }

@@ -47,6 +47,11 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
         }
     }
 
+    @Override
+    public void detruireSauvegarde(String cheminSauvegarde){
+        //todo: Peut-etre a modifier
+    }
+
     private String getCle(String cheminSauvegarde){
         /*
             Utiliser le nomModele comme clé de sauvegarde

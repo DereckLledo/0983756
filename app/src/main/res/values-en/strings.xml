@@ -19,4 +19,6 @@
     <string name="connexion">Connection</string>
     <string name="deconnexion">Log out</string>
 
+    <string name="effacerPartie">Erase current game</string>
+
 </resources>

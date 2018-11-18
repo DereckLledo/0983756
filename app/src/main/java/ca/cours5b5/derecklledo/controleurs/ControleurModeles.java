@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.derecklledo.donnees.Serveur;
 import ca.cours5b5.derecklledo.donnees.SourceDeDonnees;
 import ca.cours5b5.derecklledo.exceptions.ErreurModele;
 import ca.cours5b5.derecklledo.modeles.MParametres;
@@ -31,6 +32,7 @@ public final class ControleurModeles {
 
         listeDeSauvegardes = new ArrayList<>();
         listeDeSauvegardes.add(Disque.getInstance());
+        listeDeSauvegardes.add(Serveur.getInstance());
 
     }
 

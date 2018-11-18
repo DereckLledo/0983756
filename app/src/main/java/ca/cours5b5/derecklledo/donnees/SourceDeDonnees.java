@@ -1,5 +1,7 @@
 package ca.cours5b5.derecklledo.donnees;
 
+import android.util.Log;
+
 import java.util.Map;
 
 
@@ -16,7 +18,26 @@ public abstract class SourceDeDonnees {
             retourner le nomModele
          */
         //TODO: MODIFIER CETTE METHODE
-        return null;
+
+        String modele = "";
+
+
+        int couperNomchemin = cheminSauvegarde.indexOf('/');
+
+        if (couperNomchemin > 0){
+
+            modele = cheminSauvegarde.substring(0,couperNomchemin);
+
+
+        } else {
+            modele = cheminSauvegarde;
+        }
+
+        Log.d("atelier11+", "SourceDeDonnes: getFichier :" + modele);
+
+        return modele;
     }
+
+    public abstract void detruireSauvegarde(final String cheminSauvegarde);
 
 }

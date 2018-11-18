@@ -79,6 +79,12 @@ public final class Disque extends SourceDeDonnees {
         }
     }
 
+    @Override
+    public void detruireSauvegarde(String cheminSauvegarde){
+        //todo: Peut-etre a modifier
+      //  getFichier(cheminSauvegarde).delete();
+    }
+
 
     private File getFichier(String nomModele) {
 
@@ -89,7 +95,24 @@ public final class Disque extends SourceDeDonnees {
          */
         //TODO: MODIFIER CET METHODE
 
-        String nomFichier = getNomFichier(nomModele);
+
+
+        String nomFichier = "";
+
+
+        int couperNomModele = nomModele.indexOf('/');
+
+        if (couperNomModele > 0){
+            String modele = nomModele.substring(0,couperNomModele);
+
+            nomFichier = getNomFichier(modele);
+
+        } else {
+            nomFichier = getNomFichier(nomModele);
+        }
+
+        Log.d("atelier11+", "Disque: getFichier :" + nomFichier);
+
 
         return new File(repertoireRacine, nomFichier);
 

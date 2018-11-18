@@ -90,4 +90,21 @@
         app:layout_constraintStart_toStartOf="@+id/spinner_largeur"
         app:layout_constraintTop_toTopOf="@+id/texte_pour_gagner" />
 
+    <Button
+        android:id="@+id/bouton_effacerPartie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="146dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/effacerPartie"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_pour_gagner"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toEndOf="@+id/texte_pour_gagner"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_pour_gagner"
+        app:layout_constraintVertical_bias="0.27" />
+
 </ca.cours5b5.derecklledo.vues.VParametres>
