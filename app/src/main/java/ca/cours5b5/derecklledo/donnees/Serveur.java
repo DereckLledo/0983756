@@ -2,8 +2,11 @@ package ca.cours5b5.derecklledo.donnees;
 
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
 
@@ -22,16 +25,35 @@ public class Serveur extends  SourceDeDonnees{
     }
 
 
-    public Map<String, Object> chargerModele(final String cheminSauvegarde, ListenerChargement listenerChargement) {
+    public void chargerModele(final String cheminSauvegarde, final ListenerChargement listenerChargement) {
 
         //TODO: il y a eu modification dans la signature!!
-         //   Bonus: est-ce possible d'implanter cette méthode avec cette signature?
 
         //chemin de la sauvegarde doit etre nomModele/idUsager
         Log.d("atelier12+", "nomModele/idUsager = " + cheminSauvegarde);
 
+        DatabaseReference noeud = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
 
-        return null;
+        noeud.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    Map<String, Object> objetJson = (Map<String, Object>) dataSnapshot.getValue();
+
+                    //Données lues
+                    listenerChargement.reagirSuccess(objetJson);
+                } else {
+                    //Pas de données dans ce noeud
+                    listenerChargement.reagirErreur(new Exception("Pas de données"));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listenerChargement.reagirErreur(new Exception("Erreur de lecture"));
+            }
+        });
+
     }
 
 

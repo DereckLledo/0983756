@@ -1,10 +1,12 @@
 package ca.cours5b5.derecklledo.donnees;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.Map;
 
 
+import ca.cours5b5.derecklledo.exceptions.ErreurModele;
 import ca.cours5b5.derecklledo.serialisation.Jsonification;
 
 public class SauvegardeTemporaire extends SourceDeDonnees {
@@ -16,7 +18,7 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
     }
 
     @Override
-    public Map<String, Object> chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
+    public void chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
 
         //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
         //TODO: il y a eu modification dans la signature!!
@@ -27,11 +29,13 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
 
             Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
 
-            return objetJson;
+            Log.d("atelier12+", "SauvegardeTemp::chargerModele = SUCCESS");
+            listenerChargement.reagirSuccess(objetJson);
 
         }else{
 
-            return null;
+            Log.d("atelier12+", "SauvegardeTemp::chargerModele = ERREUR");
+            listenerChargement.reagirErreur(new ErreurModele("Pas de modele"));
 
         }
     }

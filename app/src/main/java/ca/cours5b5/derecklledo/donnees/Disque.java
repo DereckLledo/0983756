@@ -33,7 +33,7 @@ public final class Disque extends SourceDeDonnees {
     }
 
     @Override
-    public Map<String, Object> chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
+    public void chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
 
         //TODO: il y a eu modification dans la signature!!
 
@@ -45,15 +45,17 @@ public final class Disque extends SourceDeDonnees {
 
             Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
 
-            return objetJson;
+            Log.d("atelier12+", "Disque::chargerModele = SUCCESS");
+            listenerChargement.reagirSuccess(objetJson);
+
 
         } catch (FileNotFoundException e) {
-
-            return null;
+            Log.d("atelier12+", "Disque::chargerModele = ERREUR");
+            listenerChargement.reagirErreur(e);
 
         } catch (IOException e) {
-
-            return null;
+            Log.d("atelier12+", "Disque::chargerModele = ERREUR");
+            listenerChargement.reagirErreur(e);
 
         }
     }
