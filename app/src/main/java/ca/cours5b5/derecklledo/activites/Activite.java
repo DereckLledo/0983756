@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import ca.cours5b5.derecklledo.controleurs.ControleurModeles;
 import ca.cours5b5.derecklledo.donnees.Disque;
 import ca.cours5b5.derecklledo.donnees.SauvegardeTemporaire;
+import ca.cours5b5.derecklledo.donnees.Serveur;
 import ca.cours5b5.derecklledo.modeles.MParametres;
 
 
@@ -22,9 +23,12 @@ public abstract class Activite extends AppCompatActivity {
 
     protected void initialiserControleurModeles(Bundle savedInstanceState) {
 
+        //ajouter Serveur dans la séquence de chargement
+
         ControleurModeles.setSequenceDeChargement(
                 new SauvegardeTemporaire(savedInstanceState),
-                Disque.getInstance());
+                Disque.getInstance(), Serveur.getInstance() );
+
         
     }
 

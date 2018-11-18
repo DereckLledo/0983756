@@ -41,8 +41,6 @@ public class AParametres extends Activite implements Fournisseur{
                 ControleurModeles.detruireModele(MParametres.class.getSimpleName());
                 ControleurModeles.detruireModele(MPartie.class.getSimpleName());
 
-
-
             }
         });
     }

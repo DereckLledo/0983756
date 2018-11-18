@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.derecklledo.controleurs.interfaces.ListenerGetModele;
+import ca.cours5b5.derecklledo.donnees.ListenerChargement;
 import ca.cours5b5.derecklledo.donnees.Serveur;
 import ca.cours5b5.derecklledo.donnees.SourceDeDonnees;
 import ca.cours5b5.derecklledo.exceptions.ErreurModele;
@@ -57,7 +59,9 @@ public final class ControleurModeles {
         }
     }
 
-    static Modele getModele(final String nomModele){
+    static Modele getModele(final String nomModele, ListenerGetModele listenerGetModele){
+
+        //TODO: nouvelle signature
 
         Modele modele = modelesEnMemoire.get(nomModele);
 
@@ -112,7 +116,15 @@ public final class ControleurModeles {
     }
 
 
-    private static Modele creerModeleSelonNom(String nomModele) throws ErreurModele {
+    private static Modele creerModeleSelonNom(String nomModele, final ListenerGetModele listenerGetModele) throws ErreurModele {
+
+        //TODO: nouvelle signature
+
+        /**ajout**
+         *
+         * Attention aux trois conditions
+         * Attention a la méthode creerModeleEtChargerDonnes qui doit aussi memorise le modele
+         */
 
         if(nomModele.equals(MParametres.class.getSimpleName())){
 
@@ -161,5 +173,9 @@ public final class ControleurModeles {
                 */
         return nomModele + "/" + UsagerCourant.getId();
     }
+
+    //TODO: AJOUTs atelier 12
+
+
 
 }

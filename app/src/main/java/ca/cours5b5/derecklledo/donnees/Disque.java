@@ -33,7 +33,9 @@ public final class Disque extends SourceDeDonnees {
     }
 
     @Override
-    public Map<String, Object> chargerModele(String cheminSauvegarde) {
+    public Map<String, Object> chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
+
+        //TODO: il y a eu modification dans la signature!!
 
         File fichier = getFichier(cheminSauvegarde);
 

@@ -22,9 +22,13 @@ public class Serveur extends  SourceDeDonnees{
     }
 
 
-    public Map<String, Object> chargerModele(final String cheminSauvegarde){
-        //TODO: modifier les méthodes
+    public Map<String, Object> chargerModele(final String cheminSauvegarde, ListenerChargement listenerChargement) {
+
+        //TODO: il y a eu modification dans la signature!!
          //   Bonus: est-ce possible d'implanter cette méthode avec cette signature?
+
+        //chemin de la sauvegarde doit etre nomModele/idUsager
+        Log.d("atelier12+", "nomModele/idUsager = " + cheminSauvegarde);
 
 
         return null;
