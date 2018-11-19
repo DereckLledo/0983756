@@ -62,6 +62,7 @@ public final class ControleurModeles {
     static Modele getModele(final String nomModele, ListenerGetModele listenerGetModele){
 
         //TODO: nouvelle signature
+        Log.d("atelier12++", "ControleurModeles::getModele");
 
         Modele modele = modelesEnMemoire.get(nomModele);
 
@@ -179,6 +180,9 @@ public final class ControleurModeles {
         /**
          * Aussi: mémoriser le modele dans modelesEnMemoire
          */
+
+        Log.d("atelier12++", "ControleurModeles::creerModeleEtChargerdonnees");
+
         creerModeleSelonNom(nomModele, new ListenerGetModele() {
             @Override
             public void reagirAuModele(Modele modele) {
@@ -197,7 +201,12 @@ public final class ControleurModeles {
                                        String nomModele,
                                        ListenerGetModele listenerGetModele) {
 
-        chargementViaSequence(modele,nomModele,listenerGetModele,0);
+        Log.d("atelier12++", "ControleurModeles::chargerDonnees");
+
+        String chemin = getCheminSauvegarde(nomModele);
+
+        Log.d("atelier12+", "ControleurModeles::chargéDonner:: " + chemin);
+        chargementViaSequence(modele,chemin,listenerGetModele,0);
 
     }
 
@@ -205,6 +214,8 @@ public final class ControleurModeles {
                                               String cheminDeSauvegarde,
                                               ListenerGetModele listenerGetModele,
                                               int indiceSourceCourante){
+
+        Log.d("atelier12++", "ControleurModeles::chargementViaSequence");
 
             //Condition 2: si on a utilisé toutes les SourceDeDonnees de la SequenceDeChargement
         if (indiceSourceCourante >= sequenceDeChargement.length){
@@ -221,6 +232,8 @@ public final class ControleurModeles {
                                                                final int indiceSourceCourante) {
 
         //Condition 3 (dans SourceDeDonnees): si le chargement réussit ou échoue
+        Log.d("atelier12++", "ControleurModeles::chargementViaSourceCouranteOuSuivante::sequence" + indiceSourceCourante + " " +  sequenceDeChargement[indiceSourceCourante] );
+
         sequenceDeChargement[indiceSourceCourante].chargerModele(cheminDeSauvegarde, new ListenerChargement() {
             @Override
             public void reagirSuccess(Map<String, Object> objetJson) {

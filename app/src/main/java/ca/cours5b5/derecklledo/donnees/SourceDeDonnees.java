@@ -33,7 +33,7 @@ public abstract class SourceDeDonnees {
             modele = cheminSauvegarde;
         }
 
-        Log.d("atelier11+", "SourceDeDonnes: getFichier :" + modele);
+        Log.d("atelier11+", "SourceDeDonnes: getNomModele :" + modele);
 
         return modele;
     }

@@ -23,9 +23,12 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
         //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
         //TODO: il y a eu modification dans la signature!!
 
-        if(bundle != null && bundle.containsKey(cheminSauvegarde)){
+        String cheminCle = getCle(cheminSauvegarde);
+        Log.d("atelier12+", "SauvegardeTemp::chargerModele::cheminSauvegarde =  " + cheminCle);
 
-            String json = bundle.getString(cheminSauvegarde);
+        if(bundle != null && bundle.containsKey(cheminCle)){
+
+            String json = bundle.getString(cheminCle);
 
             Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
 
@@ -35,7 +38,7 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
         }else{
 
             Log.d("atelier12+", "SauvegardeTemp::chargerModele = ERREUR");
-            listenerChargement.reagirErreur(new ErreurModele("Pas de modele"));
+            listenerChargement.reagirErreur(new ErreurModele("Pas de donnees"));
 
         }
     }
@@ -43,6 +46,11 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
     @Override
     public void sauvegarderModele(String cheminSauvegarde, Map<String, Object> objetJson) {
         //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
+
+
+
+        cheminSauvegarde = getCle(cheminSauvegarde);
+        Log.d("atelier12+", "SauvegardeTemp::sauvegarderModele:(cle=nomModele):" + cheminSauvegarde);
 
         if(bundle != null){
 
@@ -63,8 +71,21 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
 
             ex: MPartie/Timrietmeriterjuin2390128 => MPartie
          */
-        //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
-        return null;
+
+        String cle = "";
+
+        //substring avant le '/'
+        int couperChemin = cheminSauvegarde.indexOf('/');
+
+        if (couperChemin > 0){
+            cle = cheminSauvegarde.substring(0,couperChemin);
+
+        } else {
+            cle = cheminSauvegarde;
+        }
+
+
+        return cle;
     }
 
 }

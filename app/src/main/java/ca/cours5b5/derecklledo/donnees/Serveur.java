@@ -30,9 +30,10 @@ public class Serveur extends  SourceDeDonnees{
         //TODO: il y a eu modification dans la signature!!
 
         //chemin de la sauvegarde doit etre nomModele/idUsager
-        Log.d("atelier12+", "nomModele/idUsager = " + cheminSauvegarde);
+        Log.d("atelier12+", "Serveur::nomModele/idUsager = " + cheminSauvegarde);
 
         DatabaseReference noeud = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
+
 
         noeud.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -40,10 +41,13 @@ public class Serveur extends  SourceDeDonnees{
                 if (dataSnapshot.exists()){
                     Map<String, Object> objetJson = (Map<String, Object>) dataSnapshot.getValue();
 
+                    Log.d("atelier12+", "Serveur::chargeModele::" + cheminSauvegarde);
+
                     //Données lues
                     listenerChargement.reagirSuccess(objetJson);
                 } else {
                     //Pas de données dans ce noeud
+                    Log.d("atelier12+", "Serveur::chargeModele::ERREUR");
                     listenerChargement.reagirErreur(new Exception("Pas de données"));
                 }
             }
@@ -60,7 +64,7 @@ public class Serveur extends  SourceDeDonnees{
     public  void sauvegarderModele(final String cheminSauvegarde, final Map<String, Object> objetJson){
         //    Sauvegarder sur le serveur
         //    Utiliser FirebaseDatabase et DatabaseReference
-        Log.d("atelier11+", "Serveur: sauvegarderModele");
+        Log.d("atelier11+", "Serveur: sauvegarderModele + " + cheminSauvegarde);
         DatabaseReference noeud = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
         noeud.setValue(objetJson);
 
