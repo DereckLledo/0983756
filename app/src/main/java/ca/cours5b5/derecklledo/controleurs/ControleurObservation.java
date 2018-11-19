@@ -26,6 +26,7 @@ public final class ControleurObservation {
         ControleurModeles.getModele(nomModele, new ListenerGetModele() {
             @Override
             public void reagirAuModele(Modele modele) {
+                observations.put(modele, listenerObservateur);
                 listenerObservateur.reagirNouveauModele(modele);
             }
         });

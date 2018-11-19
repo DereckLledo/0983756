@@ -59,9 +59,9 @@ public final class ControleurModeles {
         }
     }
 
-    static Modele getModele(final String nomModele, ListenerGetModele listenerGetModele){
+    static void getModele(final String nomModele, ListenerGetModele listenerGetModele){
 
-        //TODO: nouvelle signature
+
         Log.d("atelier12++", "ControleurModeles::getModele");
 
         Modele modele = modelesEnMemoire.get(nomModele);
@@ -76,7 +76,6 @@ public final class ControleurModeles {
             listenerGetModele.reagirAuModele(modele);
         }
 
-        return modele;
     }
 
     public static void detruireSauvegarde(String nomModele) {
