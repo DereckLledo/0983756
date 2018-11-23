@@ -11,10 +11,11 @@ import java.nio.file.Files;
 import java.util.Map;
 
 import ca.cours5b5.derecklledo.global.GConstantes;
-import ca.cours5b5.derecklledo.modeles.MPartie;
 import ca.cours5b5.derecklledo.serialisation.Jsonification;
 
 public final class Disque extends SourceDeDonnees {
+
+    private Disque(){}
 
     private static final Disque instance = new Disque();
 
@@ -24,18 +25,14 @@ public final class Disque extends SourceDeDonnees {
 
     private File repertoireRacine;
 
-    private Disque() {}
 
     public void setRepertoireRacine(File repertoireRacine) {
-
         this.repertoireRacine = repertoireRacine;
-
     }
+
 
     @Override
     public void chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
-
-        //TODO: il y a eu modification dans la signature!!
 
         File fichier = getFichier(cheminSauvegarde);
 
@@ -45,20 +42,15 @@ public final class Disque extends SourceDeDonnees {
 
             Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
 
-            Log.d("atelier12+", "Disque::chargerModele = SUCCESS");
-            listenerChargement.reagirSuccess(objetJson);
-
-
-        } catch (FileNotFoundException e) {
-            Log.d("atelier12+", "Disque::chargerModele = ERREUR");
-            listenerChargement.reagirErreur(e);
+            listenerChargement.reagirSucces(objetJson);
 
         } catch (IOException e) {
-            Log.d("atelier12+", "Disque::chargerModele = ERREUR");
+
             listenerChargement.reagirErreur(e);
 
         }
     }
+
 
     @Override
     public void sauvegarderModele(String cheminSauvegarde, Map<String, Object> objetJson) {
@@ -67,13 +59,13 @@ public final class Disque extends SourceDeDonnees {
 
         String json = Jsonification.enChaineJson(objetJson);
 
-        Log.d("atelier11+", "Disque::sauvegarderModele +  " + fichier.toString());
-
         try {
 
             OutputStream outputStream = new FileOutputStream(fichier);
 
             outputStream.write(json.getBytes());
+
+            outputStream.close();
 
         } catch (FileNotFoundException e) {
 
@@ -81,63 +73,38 @@ public final class Disque extends SourceDeDonnees {
 
         } catch (IOException e) {
 
+
             Log.d("Atelier07", "IOException: " + cheminSauvegarde);
 
         }
     }
 
+
     @Override
-    public void detruireSauvegarde(String cheminSauvegarde){
-        //todo: Peut-etre a modifier
+    public void detruireSauvegarde(String cheminSauvegarde) {
 
+        File fichier = getFichier(cheminSauvegarde);
+        fichier.delete();
 
-        File fichierEffacer = getFichier(cheminSauvegarde);
-
-        if (fichierEffacer.delete()) {
-            Log.d("atelier11+", "DISQUE + detruireSauvegarde + " + cheminSauvegarde + " :::TRUE");
-       //     Disque.getInstance().detruireSauvegarde((MPartie.class.getSimpleName()));
-
-        } else {
-            Log.d("atelier11+", "DISQUE + detruireSauvegarde + " + cheminSauvegarde + " :::FALSE");
-        }
     }
 
 
-    private File getFichier(String nomModele) {
+    private File getFichier(String cheminSauvegarde) {
 
-        /*
-            Obtenir le nomModele et l'utiliser pour le nom du fichier
+        String nomModele = getNomModele(cheminSauvegarde);
 
-            ex: MParametres/Timf083247djhER13817 => MParametres.json
-         */
-
-
-
-        String nomFichier = "";
-
-
-        int couperNomModele = nomModele.indexOf('/');
-
-        if (couperNomModele > 0){
-            String modele = nomModele.substring(0,couperNomModele);
-
-            nomFichier = getNomFichier(modele);
-
-        } else {
-            nomFichier = getNomFichier(nomModele);
-        }
-
-        Log.d("atelier11+", "Disque: getFichier : " + nomFichier);
-
+        String nomFichier = getNomFichier(nomModele);
 
         return new File(repertoireRacine, nomFichier);
 
     }
+
 
     private String getNomFichier(String nomModele) {
 
         return nomModele + GConstantes.EXTENSION_PAR_DEFAUT;
 
     }
+
 
 }

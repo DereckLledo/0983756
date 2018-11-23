@@ -1,21 +1,23 @@
 package ca.cours5b5.derecklledo.controleurs;
 
-import android.util.Log;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.derecklledo.controleurs.interfaces.ListenerGetModele;
 import ca.cours5b5.derecklledo.donnees.ListenerChargement;
 import ca.cours5b5.derecklledo.donnees.Serveur;
+import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.derecklledo.donnees.SourceDeDonnees;
 import ca.cours5b5.derecklledo.exceptions.ErreurModele;
+import ca.cours5b5.derecklledo.global.GConstantes;
+import ca.cours5b5.derecklledo.modeles.Identifiable;
 import ca.cours5b5.derecklledo.modeles.MParametres;
-import ca.cours5b5.derecklledo.modeles.MParametresPartie;
 import ca.cours5b5.derecklledo.modeles.MPartie;
+import ca.cours5b5.derecklledo.modeles.MPartieReseau;
 import ca.cours5b5.derecklledo.modeles.Modele;
 import ca.cours5b5.derecklledo.donnees.Disque;
 import ca.cours5b5.derecklledo.usagers.UsagerCourant;
@@ -40,11 +42,13 @@ public final class ControleurModeles {
 
     }
 
+
     public static void setSequenceDeChargement(SourceDeDonnees... sequenceDeChargement){
 
         ControleurModeles.sequenceDeChargement = sequenceDeChargement;
 
     }
+
 
     public static void sauvegarderModeleDansCetteSource(String nomModele, SourceDeDonnees sourceDeDonnees) {
 
@@ -52,147 +56,54 @@ public final class ControleurModeles {
 
         if(modele != null){
 
+            String cheminSauvegarde = getCheminSauvegarde(nomModele);
+
             Map<String, Object> objetJson = modele.enObjetJson();
 
-            sourceDeDonnees.sauvegarderModele(getCheminSauvegarde(nomModele), objetJson);
+            sourceDeDonnees.sauvegarderModele(cheminSauvegarde, objetJson);
 
         }
     }
 
-    static void getModele(final String nomModele, ListenerGetModele listenerGetModele){
+
+    public static void prechargerModele(String nomModele) {
+
+        getModele(nomModele, new ListenerGetModele() {
+            @Override
+            public void reagirAuModele(Modele modele) {
+                // Rien
+            }
+        });
+    }
 
 
-        Log.d("atelier12++", "ControleurModeles::getModele");
+    static void getModele(String nomModele, ListenerGetModele listenerGetModele){
 
         Modele modele = modelesEnMemoire.get(nomModele);
 
+        if(modele != null){
 
-        //condition 1
-        if(modele == null){
-
-            creerModeleEtChargerDonnees(nomModele,listenerGetModele);
-
-        } else {
             listenerGetModele.reagirAuModele(modele);
-        }
 
-    }
+        }else {
 
-    public static void detruireSauvegarde(String nomModele) {
-        Log.d("atelier11+", "ControleurModeles: detruireSauvegarde");
-        String cheminSauvegarde = getCheminSauvegarde(nomModele);
-        for(SourceDeDonnees source : listeDeSauvegardes ) {
-            source.detruireSauvegarde(cheminSauvegarde);
+            creerModeleEtChargerDonnees(nomModele, listenerGetModele);
         }
     }
 
-/*
-    private static Modele chargerViaSequenceDeChargement(final String nomModele){
 
-        Modele modele = creerModeleSelonNom(nomModele);
-
-        modelesEnMemoire.put(nomModele, modele);
-
-        for(SourceDeDonnees sourceDeDonnees : sequenceDeChargement){
-
-            Map<String, Object> objetJson = sourceDeDonnees.chargerModele(nomModele);
-
-            if(objetJson != null){
-
-                modele.aPartirObjetJson(objetJson);
-                break;
-
-            }
-
-        }
-
-        return modele;
-    }
-
-    */
-
-    public static void sauvegarderModele(String nomModele) throws ErreurModele {
-
-        for(SourceDeDonnees source : listeDeSauvegardes){
-
-            sauvegarderModeleDansCetteSource(nomModele, source);
-
-        }
-
-    }
-
-
-    private static void creerModeleSelonNom(String nomModele, final ListenerGetModele listenerGetModele) throws ErreurModele {
-
-        //TODO: nouvelle signature
-
-        /**ajout**
-         *
-         * Attention aux trois conditions
-         * Attention a la méthode creerModeleEtChargerDonnes qui doit aussi memorise le modele
-         */
-        /* code atelier 11
-        if(nomModele.equals(MParametres.class.getSimpleName())){
-
-            return new MParametres();
-
-        }else if(nomModele.equals(MPartie.class.getSimpleName())){
-
-            MParametres mParametres = (MParametres) getModele(MParametres.class.getSimpleName());
-
-            return new MPartie(mParametres.getParametresPartie().cloner());
-
-        }else{
-
-            throw new ErreurModele("Modèle inconnu: " + nomModele);
-
-        }*/
-
-
-        if (nomModele.equals(MParametres.class.getSimpleName())){
-            MParametres mParametres = new MParametres();
-            listenerGetModele.reagirAuModele(mParametres);
-
-        } else if ( nomModele.equals(MPartie.class.getSimpleName())) {
-
-
-            getModele(MParametres.class.getSimpleName(), new ListenerGetModele() {
-                @Override
-                public void reagirAuModele(Modele modele) {
-                    MParametres mParametres = (MParametres) modele;
-
-                    MPartie mPartie = new MPartie(mParametres.getParametresPartie().cloner());
-
-                    listenerGetModele.reagirAuModele(mPartie);
-                }
-            });
-
-        } else {
-            throw new ErreurModele("Modèle inconnu: " + nomModele);
-        }
-
-
-
-    }
-
-    private static void creerModeleEtChargerDonnees (final String nomModele, final ListenerGetModele listenerGetModele){
-        /**
-         * Aussi: mémoriser le modele dans modelesEnMemoire
-         */
-
-        Log.d("atelier12++", "ControleurModeles::creerModeleEtChargerdonnees");
+    private static void creerModeleEtChargerDonnees(final String nomModele,
+                                                    final ListenerGetModele listenerGetModele) {
 
         creerModeleSelonNom(nomModele, new ListenerGetModele() {
             @Override
             public void reagirAuModele(Modele modele) {
-                //instruction A
-                modelesEnMemoire.put(nomModele,modele);
+
+                modelesEnMemoire.put(nomModele, modele);
+
                 chargerDonnees(modele, nomModele, listenerGetModele);
             }
         });
-
-
-
 
     }
 
@@ -200,76 +111,163 @@ public final class ControleurModeles {
                                        String nomModele,
                                        ListenerGetModele listenerGetModele) {
 
-        Log.d("atelier12++", "ControleurModeles::chargerDonnees");
+        String cheminSauvegarde = getCheminSauvegarde(nomModele);
 
-        String chemin = getCheminSauvegarde(nomModele);
+        int indicePremiereSource = 0;
 
-        Log.d("atelier12+", "ControleurModeles::chargéDonner:: " + chemin);
-        chargementViaSequence(modele,chemin,listenerGetModele,0);
-
+        chargementViaSequence(
+                modele,
+                cheminSauvegarde,
+                listenerGetModele,
+                indicePremiereSource);
     }
+
 
     private static void chargementViaSequence(Modele modele,
                                               String cheminDeSauvegarde,
                                               ListenerGetModele listenerGetModele,
                                               int indiceSourceCourante){
 
-        Log.d("atelier12++", "ControleurModeles::chargementViaSequence");
+        if(indiceSourceCourante < sequenceDeChargement.length){
 
-            //Condition 2: si on a utilisé toutes les SourceDeDonnees de la SequenceDeChargement
-        if (indiceSourceCourante >= sequenceDeChargement.length){
-            terminerChargement(modele,listenerGetModele);
-        } else {
-            chargementViaSourceCouranteOuSuivante(modele,cheminDeSauvegarde,listenerGetModele,indiceSourceCourante);
+            chargementViaSourceCouranteOuSuivante(modele,
+                    cheminDeSauvegarde,
+                    listenerGetModele,
+                    indiceSourceCourante);
+
+        }else{
+
+            terminerChargement(modele, listenerGetModele);
+
         }
-
     }
 
-    private static void chargementViaSourceCouranteOuSuivante (final Modele modele,
-                                                               final String cheminDeSauvegarde,
-                                                               final ListenerGetModele listenerGetModele,
-                                                               final int indiceSourceCourante) {
 
-        //Condition 3 (dans SourceDeDonnees): si le chargement réussit ou échoue
-        Log.d("atelier12++", "ControleurModeles::chargementViaSourceCouranteOuSuivante::sequence" + indiceSourceCourante + " " +  sequenceDeChargement[indiceSourceCourante] );
+    private static void chargementViaSourceCouranteOuSuivante(final Modele modele,
+                                                              final String cheminDeSauvegarde,
+                                                              final ListenerGetModele listenerGetModele,
+                                                              final int indiceSourceCourante) {
 
-        sequenceDeChargement[indiceSourceCourante].chargerModele(cheminDeSauvegarde, new ListenerChargement() {
-            @Override
-            public void reagirSuccess(Map<String, Object> objetJson) {
-                terminerChargementAvecDonnees(objetJson,modele,listenerGetModele);
-            }
+        SourceDeDonnees sourceCourante = sequenceDeChargement[indiceSourceCourante];
 
-            @Override
-            public void reagirErreur(Exception e) {
-                chargementViaSourceSuivante(modele,cheminDeSauvegarde,listenerGetModele,indiceSourceCourante);
-            }
-        });
+        sourceCourante.chargerModele(cheminDeSauvegarde,
+                new ListenerChargement() {
 
+                    @Override
+                    public void reagirSucces(final Map<String, Object> objetJson) {
+
+                        terminerChargementAvecDonnees(objetJson, modele, listenerGetModele);
+                    }
+
+                    @Override
+                    public void reagirErreur(Exception e) {
+
+                        chargementViaSourceSuivante(modele,
+                                cheminDeSauvegarde,
+                                listenerGetModele,
+                                indiceSourceCourante);
+                    }
+
+                });
     }
 
-    private static void terminerChargementAvecDonnees(Map<String, Object> objetJson, Modele modele, ListenerGetModele listenerGetModele){
+
+    private static void terminerChargementAvecDonnees(Map<String, Object> objetJson,
+                                                      Modele modele,
+                                                      ListenerGetModele listenerGetModele) {
 
         modele.aPartirObjetJson(objetJson);
+
         terminerChargement(modele, listenerGetModele);
 
     }
 
-    private static void terminerChargement (Modele modele, ListenerGetModele listenerGetModele) {
+    private static void terminerChargement(Modele modele,
+                                           ListenerGetModele listenerGetModele) {
+
         listenerGetModele.reagirAuModele(modele);
-    }
-
-    private static void chargementViaSourceSuivante (Modele modele,
-                                                     String cheminDeSauvegarde,
-                                                     ListenerGetModele listenerGetModele,
-                                                     int indiceSourceCourante) {
-
-        chargementViaSequence(modele,cheminDeSauvegarde,listenerGetModele,indiceSourceCourante+1);
 
     }
 
+
+    private static void chargementViaSourceSuivante(Modele modele,
+                                                    String cheminDeSauvegarde,
+                                                    ListenerGetModele listenerGetModele,
+                                                    int indiceSourceCourante) {
+
+        int indiceSourceSuivante = indiceSourceCourante + 1;
+
+        chargementViaSequence(modele,
+                cheminDeSauvegarde,
+                listenerGetModele,
+                indiceSourceSuivante);
+
+    }
+
+
+    public static void sauvegarderModele(String nomModele) throws ErreurModele {
+        for(SourceDeDonnees source : listeDeSauvegardes){
+
+            sauvegarderModeleDansCetteSource(nomModele, source);
+
+        }
+    }
+
+
+    private static void creerModeleSelonNom(String nomModele,
+                                            final ListenerGetModele listenerGetModele) throws ErreurModele {
+
+        if(nomModele.equals(MParametres.class.getSimpleName())){
+
+            listenerGetModele.reagirAuModele(new MParametres());
+
+        }else if(nomModele.equals(MPartie.class.getSimpleName())){
+
+            creerPartie(listenerGetModele);
+
+        }else if(nomModele.equals(MPartieReseau.class.getSimpleName())){
+
+            creerPartieReseau(listenerGetModele);
+
+        }else{
+
+            throw new ErreurModele("nomModèle inconnu: " + nomModele);
+
+        }
+    }
+
+
+    private static void creerPartie(final ListenerGetModele listenerGetModele) {
+        getModele(MParametres.class.getSimpleName(), new ListenerGetModele() {
+            @Override
+            public void reagirAuModele(Modele modele) {
+
+                MParametres mParametres = (MParametres) modele;
+
+                listenerGetModele.reagirAuModele(new MPartie(mParametres.getParametresPartie().cloner()));
+
+            }
+        });
+    }
+
+
+    private static void creerPartieReseau(final ListenerGetModele listenerGetModele) {
+        getModele(MParametres.class.getSimpleName(), new ListenerGetModele() {
+            @Override
+            public void reagirAuModele(Modele modele) {
+
+                MParametres mParametres = (MParametres) modele;
+
+                listenerGetModele.reagirAuModele(new MPartieReseau(mParametres.getParametresPartie().cloner()));
+
+            }
+        });
+    }
 
 
     public static void detruireModele(String nomModele) {
+
+        detruireSauvegardes(nomModele);
 
         Modele modele = modelesEnMemoire.get(nomModele);
 
@@ -287,21 +285,45 @@ public final class ControleurModeles {
         }
     }
 
-    public static String getCheminSauvegarde(String nomModele) {
-        /*
-            Le chemin est de la forme:
 
-        nomModele/idUsager
+    private static void detruireSauvegardes(String nomModele) {
 
-        ex:
+        String cheminSauvegarde = getCheminSauvegarde(nomModele);
 
-        MPartie/T1m4328789hw98129dnWe12
-                */
-        return nomModele + "/" + UsagerCourant.getId();
+        for(SourceDeDonnees sourceDeDonnees : listeDeSauvegardes){
+
+            sourceDeDonnees.detruireSauvegarde(cheminSauvegarde);
+
+        }
     }
 
-    //TODO: AJOUTs atelier 12
 
+    static String getCheminSauvegarde(String nomModele){
+
+        String cheminParDefaut = nomModele + GConstantes.SEPARATEUR_DE_CHEMIN + UsagerCourant.getId();
+
+        String chemin = cheminParDefaut;
+
+        Modele modele = modelesEnMemoire.get(nomModele);
+
+        if(modele != null && modele instanceof Identifiable){
+
+            chemin = getCheminSpecifique(nomModele, (Identifiable) modele);
+
+        }
+
+        return chemin;
+    }
+
+
+    @NonNull
+    private static String getCheminSpecifique(String nomModele, Identifiable modele) {
+
+        String cheminSpecifique = nomModele + GConstantes.SEPARATEUR_DE_CHEMIN + modele.getId();
+
+        return cheminSpecifique;
+
+    }
 
 
 }

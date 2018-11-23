@@ -1,17 +1,17 @@
 package ca.cours5b5.derecklledo.donnees;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.Map;
-
 
 import ca.cours5b5.derecklledo.exceptions.ErreurModele;
 import ca.cours5b5.derecklledo.serialisation.Jsonification;
 
 public class SauvegardeTemporaire extends SourceDeDonnees {
 
-    private Bundle bundle;
+    protected Bundle bundle;
+
+    public SauvegardeTemporaire(){}
 
     public SauvegardeTemporaire(Bundle bundle){
         this.bundle = bundle;
@@ -19,73 +19,57 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
 
     @Override
     public void chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
+        if(bundle == null){
+            listenerChargement.reagirErreur(new ErreurModele("Le bundle est null"));
+            return;
+        }
 
-        //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
-        //TODO: il y a eu modification dans la signature!!
+        String cle = getCle(cheminSauvegarde);
 
-        String cheminCle = getCle(cheminSauvegarde);
-        Log.d("atelier12+", "SauvegardeTemp::chargerModele::cheminSauvegarde =  " + cheminCle);
+        if(bundle.containsKey(cle)){
 
-        if(bundle != null && bundle.containsKey(cheminCle)){
-
-            String json = bundle.getString(cheminCle);
+            String json = bundle.getString(cle);
 
             Map<String, Object> objetJson = Jsonification.aPartirChaineJson(json);
 
-            Log.d("atelier12+", "SauvegardeTemp::chargerModele = SUCCESS");
-            listenerChargement.reagirSuccess(objetJson);
+            listenerChargement.reagirSucces(objetJson);
 
         }else{
 
-            Log.d("atelier12+", "SauvegardeTemp::chargerModele = ERREUR");
-            listenerChargement.reagirErreur(new ErreurModele("Pas de donnees"));
-
+            listenerChargement.reagirErreur(new ErreurModele("La clé " + cheminSauvegarde + " n'est pas dans la sauvegarde temporaire"));
         }
     }
+
 
     @Override
     public void sauvegarderModele(String cheminSauvegarde, Map<String, Object> objetJson) {
-        //TODO: Utiliser getCle pour obtenir la clé de sauvegarde
-
-
-
-        cheminSauvegarde = getCle(cheminSauvegarde);
-        Log.d("atelier12+", "SauvegardeTemp::sauvegarderModele:(cle=nomModele):" + cheminSauvegarde);
-
-        if(bundle != null){
-
-            String json = Jsonification.enChaineJson(objetJson);
-            bundle.putString(cheminSauvegarde, json);
-
+        if(bundle == null){
+            return;
         }
+
+        String cle = getCle(cheminSauvegarde);
+
+        String json = Jsonification.enChaineJson(objetJson);
+        bundle.putString(cle, json);
+
     }
 
-    @Override
-    public void detruireSauvegarde(String cheminSauvegarde){
-        //todo: Peut-etre a modifier
-    }
 
     private String getCle(String cheminSauvegarde){
-        /*
-            Utiliser le nomModele comme clé de sauvegarde
+        return getNomModele(cheminSauvegarde);
+    }
 
-            ex: MPartie/Timrietmeriterjuin2390128 => MPartie
-         */
 
-        String cle = "";
-
-        //substring avant le '/'
-        int couperChemin = cheminSauvegarde.indexOf('/');
-
-        if (couperChemin > 0){
-            cle = cheminSauvegarde.substring(0,couperChemin);
-
-        } else {
-            cle = cheminSauvegarde;
+    @Override
+    public void detruireSauvegarde(String cheminSauvegarde) {
+        if(bundle == null){
+            return;
         }
 
+        String cle = getCle(cheminSauvegarde);
 
-        return cle;
+        bundle.remove(cle);
     }
+
 
 }

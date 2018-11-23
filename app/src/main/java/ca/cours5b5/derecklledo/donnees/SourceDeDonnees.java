@@ -1,43 +1,23 @@
 package ca.cours5b5.derecklledo.donnees;
 
-import android.util.Log;
 
 import java.util.Map;
 
+import ca.cours5b5.derecklledo.global.GConstantes;
 
 public abstract class SourceDeDonnees {
 
     public abstract void chargerModele(final String cheminSauvegarde, final ListenerChargement listenerChargement);
 
-    public abstract void sauvegarderModele(final String cheminSauvegarde, final Map<String, Object> objetJson);
+    public abstract void sauvegarderModele(String cheminSauvegarde, Map<String, Object> objetJson);
 
-    protected String getNomModele(String cheminSauvegarde) {
-        /*
-            Pour un chemin de sauvegarde de la forme nomModele/ID
+    public abstract void detruireSauvegarde(String cheminSauvegarde);
 
-            retourner le nomModele
-         */
-        //TODO: MODIFIER CETTE METHODE
+    protected String getNomModele(String cheminSauvegarde){
 
-        String modele = "";
+        return cheminSauvegarde.split(GConstantes.SEPARATEUR_DE_CHEMIN)[0];
 
-
-        int couperNomchemin = cheminSauvegarde.indexOf('/');
-
-        if (couperNomchemin > 0){
-
-            modele = cheminSauvegarde.substring(0,couperNomchemin);
-
-
-        } else {
-            modele = cheminSauvegarde;
-        }
-
-        Log.d("atelier11+", "SourceDeDonnes: getNomModele :" + modele);
-
-        return modele;
     }
 
-    public abstract void detruireSauvegarde(final String cheminSauvegarde);
 
 }
