@@ -72,6 +72,8 @@ public abstract class Vue extends ConstraintLayout implements Fournisseur {
 
         fenetreMessage.show();
 
+        ////
+
     }
 
 

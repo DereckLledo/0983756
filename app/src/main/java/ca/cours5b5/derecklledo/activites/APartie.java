@@ -31,6 +31,9 @@ public class APartie extends Activite implements Fournisseur {
                     public void executer(Object... args) {
 
                         quitterCetteActivite();
+                        //efface les donnees de la partie lorsqu'elle se termine
+                        ControleurModeles.detruireModele(MPartie.class.getSimpleName());
+
 
                     }
                 });

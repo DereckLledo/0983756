@@ -62,6 +62,7 @@ public abstract class Activite extends AppCompatActivity {
 
 
     protected void quitterCetteActivite(){
+
         finish();
     }
 
