@@ -12,6 +12,7 @@ import ca.cours5b5.derecklledo.global.GCommande;
 import ca.cours5b5.derecklledo.global.GCouleur;
 import ca.cours5b5.derecklledo.global.GDirection;
 import ca.cours5b5.derecklledo.serialisation.AttributSerialisable;
+import ca.cours5b5.derecklledo.vues.VGrille;
 
 public class MGrille extends Modele  {
 
@@ -48,6 +49,12 @@ public class MGrille extends Modele  {
 
     }
 
+/*    public void desactiverEnTete(int colonne) {
+        //
+        VGrille.desactiverEntete(colonne);
+
+
+    }*/
 
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {

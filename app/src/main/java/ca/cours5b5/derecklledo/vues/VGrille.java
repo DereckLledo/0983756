@@ -185,6 +185,8 @@ public class VGrille extends GridLayout {
 
         List<MColonne> colonnes = grille.getColonnes();
 
+
+
         for(int numeroColonne=0; numeroColonne < colonnes.size(); numeroColonne++){
 
             List<MJeton> jetons = colonnes.get(numeroColonne).getJetons();
@@ -193,7 +195,16 @@ public class VGrille extends GridLayout {
 
                 MJeton jeton = jetons.get(numeroRangee);
 
+                Log.d("pfinal", "jetons test -> "+ jetons.size());
+
                 afficherJeton(numeroColonne, numeroRangee, jeton);
+
+                //lorsque la colonne est remplie de jetons (nombreRangees - 1) = la hauteur du gridlayout sans les entetes
+                if ( jetons.size() == (this.nombreRangees - 1) ){
+                    Log.d("pfinal", "REMPLIE test -> "+ jetons.size() + " " + this.nombreRangees);
+                    entetes.get(numeroColonne).setEnabled(false);
+                } 
+
 
             }
         }
@@ -201,8 +212,15 @@ public class VGrille extends GridLayout {
 
     private void afficherJeton(int colonne, int rangee, MJeton jeton){
 
+
+
         colonnesDeCases.get(colonne).get(rangee).afficherJeton(jeton);
 
     }
 
+    public void desactiverEntete(int colonne) {
+
+        entetes.get(colonne).setEnabled(false);
+
+    }
 }

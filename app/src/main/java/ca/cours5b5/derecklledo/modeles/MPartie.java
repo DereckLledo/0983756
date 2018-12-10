@@ -88,6 +88,11 @@ public class MPartie extends Modele implements Fournisseur {
 
         if (siCoupLegal(colonne)) {
             jouerCoupLegal(colonne);
+        } else {
+            // ici on désactive l'entete
+
+         //   grille.desactiverEnTete(colonne);
+
         }
     }
 
