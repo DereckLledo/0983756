@@ -1,13 +1,16 @@
 package ca.cours5b5.derecklledo.vues;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import ca.cours5b5.derecklledo.R;
 import ca.cours5b5.derecklledo.controleurs.Action;
 import ca.cours5b5.derecklledo.controleurs.ControleurAction;
+import ca.cours5b5.derecklledo.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.derecklledo.global.GCommande;
 import ca.cours5b5.derecklledo.usagers.UsagerCourant;
 
@@ -40,6 +43,8 @@ public class VMenuPrincipal extends Vue {
     private Button boutonConnexion;
     private Action actionConnexion;
     private Action actionDeconnexion;
+    private Action actionConnexionAvantReseau;
+
 
 
     @Override
@@ -53,6 +58,7 @@ public class VMenuPrincipal extends Vue {
         installerListeners();
 
         ajusterTexteConnexionDeconnexion();
+
 
     }
 
@@ -81,6 +87,8 @@ public class VMenuPrincipal extends Vue {
 
         actionDeconnexion = ControleurAction.demanderAction(GCommande.DECONNEXION);
 
+        actionConnexionAvantReseau = ControleurAction.demanderAction(GCommande.CONNEXION_AVANT_RESEAU);
+
 
     }
 
@@ -101,12 +109,32 @@ public class VMenuPrincipal extends Vue {
             }
         });
 
+
+
+
+
+        //action differente si l<usager est connecté ou non
         boutonPartieReseau.setOnClickListener(new OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
-                actionPartieReseau.executerDesQuePossible();
+
+                if(!UsagerCourant.siUsagerConnecte()){
+
+                    actionConnexionAvantReseau.executerDesQuePossible();
+                    boutonConnexion.setText(R.string.deconnexion);
+
+
+                } else {
+
+                    actionPartieReseau.executerDesQuePossible();
+                }
+
             }
         });
+
+
 
         boutonConnexion.setOnClickListener(new OnClickListener() {
             @Override
@@ -129,7 +157,7 @@ public class VMenuPrincipal extends Vue {
     }
 
 
-    private void ajusterTexteConnexionDeconnexion() {
+    public void ajusterTexteConnexionDeconnexion() {
         if(UsagerCourant.siUsagerConnecte()){
 
             boutonConnexion.setText(R.string.deconnexion);
@@ -141,4 +169,11 @@ public class VMenuPrincipal extends Vue {
         }
     }
 
+    private boolean connect(){
+        actionConnexion.executerDesQuePossible();
+        actionConnexion.setArguments();
+        Log.d("pfinal", "connect()");
+        return UsagerCourant.siUsagerConnecte();
+
+    }
 }

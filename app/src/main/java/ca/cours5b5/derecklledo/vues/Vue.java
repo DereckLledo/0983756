@@ -48,9 +48,12 @@ public abstract class Vue extends ConstraintLayout implements Fournisseur {
 
                     }
                 });
+
     }
 
-    private void afficherMessagePuisExecuterAction(String message, final Action actionApresMessage) {
+
+
+    public void afficherMessagePuisExecuterAction(String message, final Action actionApresMessage) {
 
         Snackbar fenetreMessage = Snackbar.make(this, message, GConstantes.DELAIS_MESSAGE_AVEC_ACTION);
 
@@ -90,6 +93,13 @@ public abstract class Vue extends ConstraintLayout implements Fournisseur {
         String nomTraduit = getResources().getString(idNomTraduit);
 
         message = message.replace("@@", nomTraduit);
+
+        return message;
+
+    }
+
+    public String getMessageConnexion(){
+        String message = getResources().getString(R.string.message_connexion);
 
         return message;
 

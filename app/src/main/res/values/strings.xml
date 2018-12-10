@@ -35,5 +35,7 @@
     <string name="ROUGE">rouge</string>
     <string name="JAUNE">jaune</string>
 
+    <string name="message_connexion">Vous devez vous connecter avant de jouer en ligne!</string>
+
 
 </resources>

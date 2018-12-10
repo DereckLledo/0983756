@@ -3,6 +3,7 @@ package ca.cours5b5.derecklledo.activites;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,8 @@ import static ca.cours5b5.derecklledo.global.GConstantes.CODE_CONNEXION_FIREBASE
 
 public class AMenuPrincipal extends Activite implements Fournisseur {
 
+    private boolean connecterAvantReseau =  false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,8 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
         fournirActions();
 
     }
+
+
 
 
     private void fournirActions() {
@@ -48,7 +53,9 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
         fournirActionJoindreOuCreerPartieReseau();
 
+        fournirActionConnexionAvantReseau();
     }
+
 
 
     private void fournirActionJoindreOuCreerPartieReseau() {
@@ -147,6 +154,24 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
     }
 
 
+    private void fournirActionConnexionAvantReseau() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.CONNEXION_AVANT_RESEAU,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        Log.d("pfinal", " fournirActionConnexionAvantReseau()");
+                        connecterAvantReseau = true;
+                        effectuerConnexion();
+                    }
+                });
+
+
+    }
+
+
     private void effectuerConnexion() {
 
         List<AuthUI.IdpConfig> fournisseursDeConnexion = new ArrayList<>();
@@ -159,6 +184,7 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
                 .createSignInIntentBuilder()
                 .setAvailableProviders(fournisseursDeConnexion)
                 .build();
+
 
         this.startActivityForResult(intentionConnexion, CODE_CONNEXION_FIREBASE);
 
@@ -187,14 +213,27 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
             if (resultCode == RESULT_OK) {
 
-                // Connexion réussie
+
+
+
+                // Si c'est une connexion par le bouton "play on line" -> transition vers AttendreAdversaire()
+                if( connecterAvantReseau) {
+
+                    transitionAttendreAdversaire();
+                }
+
+
+
 
             } else {
 
                 // connexion échouée
             }
         }
+
     }
+
+
 
 
 }
