@@ -9,6 +9,7 @@ import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.derecklledo.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.derecklledo.global.GCommande;
 import ca.cours5b5.derecklledo.modeles.MPartie;
+import ca.cours5b5.derecklledo.vues.VGrille;
 
 public class APartie extends Activite implements Fournisseur {
 

@@ -12,6 +12,8 @@ import java.util.List;
 
 import ca.cours5b5.derecklledo.controleurs.Action;
 import ca.cours5b5.derecklledo.controleurs.ControleurAction;
+import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.derecklledo.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.derecklledo.global.GCommande;
 import ca.cours5b5.derecklledo.global.GCouleur;
 import ca.cours5b5.derecklledo.modeles.MColonne;
@@ -19,7 +21,7 @@ import ca.cours5b5.derecklledo.modeles.MGrille;
 import ca.cours5b5.derecklledo.modeles.MJeton;
 
 
-public class VGrille extends GridLayout {
+public class VGrille extends GridLayout implements Fournisseur {
 
     public VGrille(Context context) {
         super(context);
@@ -43,6 +45,8 @@ public class VGrille extends GridLayout {
 
     private List<VEntete> entetes;
 
+    public static List<Integer>entetesPartieGagner = new ArrayList<>();
+
 
     @Override
     protected void onFinishInflate() {
@@ -53,7 +57,26 @@ public class VGrille extends GridLayout {
         demanderActionEntete();
 
 
+        partieGagnerEntetes();
+
+
     }
+
+    private void partieGagnerEntetes(){
+
+        ControleurAction.fournirAction(this, GCommande.PARTIE_GAGNER_ENTETES, new ListenerFournisseur() {
+            @Override
+            public void executer(Object... args) {
+
+                for (int i = 0; i < entetes.size();i++){
+                    Log.d("pfinal", " VGrille::partieGagnerEntetes");
+                    entetes.get(i).setEnabled(false);
+                }
+            }
+        });
+
+    }
+
 
     private void demanderActionEntete() {
 
@@ -203,7 +226,7 @@ public class VGrille extends GridLayout {
                 if ( jetons.size() == (this.nombreRangees - 1) ){
                     Log.d("pfinal", "REMPLIE test -> "+ jetons.size() + " " + this.nombreRangees);
                     entetes.get(numeroColonne).setEnabled(false);
-                } 
+                }
 
 
             }
@@ -218,9 +241,7 @@ public class VGrille extends GridLayout {
 
     }
 
-    public void desactiverEntete(int colonne) {
-
-        entetes.get(colonne).setEnabled(false);
-
+    public  List<VEntete> getEntetes(){
+        return this.entetes;
     }
 }

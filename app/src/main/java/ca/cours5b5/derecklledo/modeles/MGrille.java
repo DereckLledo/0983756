@@ -51,7 +51,7 @@ public class MGrille extends Modele  {
 
 /*    public void desactiverEnTete(int colonne) {
         //
-        VGrille.desactiverEntete(colonne);
+        this.getColonnes().
 
 
     }*/

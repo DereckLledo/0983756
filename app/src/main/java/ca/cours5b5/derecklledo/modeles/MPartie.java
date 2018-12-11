@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.cours5b5.derecklledo.controleurs.Action;
 import ca.cours5b5.derecklledo.controleurs.ControleurAction;
 import ca.cours5b5.derecklledo.controleurs.ControleurPartie;
 import ca.cours5b5.derecklledo.controleurs.interfaces.Fournisseur;
@@ -88,11 +89,6 @@ public class MPartie extends Modele implements Fournisseur {
 
         if (siCoupLegal(colonne)) {
             jouerCoupLegal(colonne);
-        } else {
-            // ici on désactive l'entete
-
-         //   grille.desactiverEnTete(colonne);
-
         }
     }
 
@@ -104,7 +100,12 @@ public class MPartie extends Modele implements Fournisseur {
         
         if (grille.siCouleurGagne(couleurCourante, parametres.getPourGagner())) {
 
+            Action action = ControleurAction.demanderAction(GCommande.PARTIE_GAGNER_ENTETES);
+            action.executerDesQuePossible();
+
+
             ControleurPartie.getInstance().gagnerPartie(couleurCourante);
+
 
         } else {
 
